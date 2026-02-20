@@ -47,6 +47,17 @@ class FloatingService : Service() {
     private var screenHeight: Int? = 0
     private var screenWidth: Int? = 0
 
+    //Props qui dépendent du user
+    //propriétés de la grille
+    private var beginX = 0
+    private var beginY = 0
+    private var endX = 0
+    private var endY = 0
+    //Offset lol
+    private var offset = 0
+
+    private var user = "L"
+
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreate() {
         super.onCreate()
@@ -55,7 +66,12 @@ class FloatingService : Service() {
 
         floatingButton = Button(this)
         floatingButton.text = "Off"
-
+        if(user == "L"){
+            beginX = 10
+            beginY = 295
+            endX = 704
+            endY = 982
+        }
 
 
 
@@ -399,6 +415,17 @@ class FloatingService : Service() {
         //moveButton(x, realY(y))
         val centerXs = Array(9) { IntArray(9) }
         val centerYs = Array(9) { IntArray(9) }
+        //Ultra responsive process de la mort qui tue (Pas testé)
+        val gridHeight = endY-beginY
+        val gridWidth = endX-beginX
+        val cellWidth = gridWidth/9f
+        val cellHeight = gridHeight/9f
+        for (i in 0..8) {
+            for (j in 0..8) {
+                centerXs[i][j] = (x + cellWidth * j + cellWidth/2).toInt()
+                centerYs[i][j] = (y + cellHeight * i + cellHeight/2).toInt()
+            }
+        }
         recognizer.process(image)
             .addOnSuccessListener({ visionText ->
                 val grid = Array(9) { IntArray(9) }
@@ -406,12 +433,6 @@ class FloatingService : Service() {
                 val cellWidth = width / 9f
                 val cellHeight = height / 9f
 
-                for (i in 0..8) {
-                    for (j in 0..8) {
-                        centerXs[i][j] = (x + cellWidth * j + cellWidth/2).toInt()
-                        centerYs[i][j] = (y + cellHeight * i + cellHeight/2).toInt()
-                    }
-                }
 
                 for (block in visionText.textBlocks)
                     for (line in block.lines)
