@@ -77,6 +77,7 @@ class FloatingService : Service() {
     private var firstButtonY = 0
     private var closeSaveProgressButtonX = 0
     private var closeSaveProgressButtonY = 0
+    private var closeSaveRateButtonY = 0
     private var returnButtonX = 0
     private var returnButtonY = 0
     private var realityWhyModifier = 0
@@ -104,6 +105,7 @@ class FloatingService : Service() {
             firstButtonY = 2030
             closeSaveProgressButtonX = 960
             closeSaveProgressButtonY = 640
+            closeSaveRateButtonY = 790
             returnButtonX = 70
             returnButtonY = 130
             realityWhyModifier = 0 //(Si l'ocr de TEXTE clique trop haut ou trop bas, ajuster cette merde)
@@ -353,10 +355,10 @@ class FloatingService : Service() {
                     if(text == "+150 points"){
                         is150 = true
                         rect150 = rect
-                    }else if(text == "+200 points"){
+                    }else if(text == "+200 points" || text ==  "+400 points"){
                         is200 = true
                         rect200 = rect
-                    }else if(text == "+300 points"){
+                    }else if(text == "+300 points" || text ==  "+600 points"){
                         is300 = true
                         rect300 = rect
                     }else if(text == "+100 points"){
@@ -364,6 +366,10 @@ class FloatingService : Service() {
                     }else if (text == "Saving your progress") {
                         is_progress = true
                         AutoService.instance.click(closeSaveProgressButtonX, closeSaveProgressButtonY)
+                        etape = 0
+                    }else if (text == "Rate Game") {
+                        is_progress = true
+                        AutoService.instance.click(closeSaveProgressButtonX, closeSaveRateButtonY)
                         etape = 0
                     }
                 }
@@ -380,7 +386,7 @@ class FloatingService : Service() {
                     } else if (text == "New Game") {
                         AutoService.instance.click(real_x, real_y)
                         etape = 1
-                    } else if (text == "Start" || text == "Continue" || text == "Main Menu" || text == "OK") {
+                    } else if (text == "Start" || text == "Continue" || text == "Main menu" || text == "OK" || text == "Claim") {
                         AutoService.instance.click(real_x, real_y)
                         etape = 0
                     } else if (text == "Select difficulty") {
