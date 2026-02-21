@@ -77,6 +77,8 @@ class FloatingService : Service() {
     private var firstButtonY = 0
     private var closeSaveProgressButtonX = 0
     private var closeSaveProgressButtonY = 0
+    private var returnButtonX = 0
+    private var returnButtonY = 0
     private var realityWhyModifier = 0
 
     private var user = "Louan"
@@ -102,6 +104,8 @@ class FloatingService : Service() {
             firstButtonY = 2030
             closeSaveProgressButtonX = 960
             closeSaveProgressButtonY = 640
+            returnButtonX = 70
+            returnButtonY = 130
             realityWhyModifier = 0 //(Si l'ocr de TEXTE clique trop haut ou trop bas, ajuster cette merde)
         }
 
@@ -541,8 +545,8 @@ class FloatingService : Service() {
                         etape = 6
                         isSolving = false
                         AutoService.instance.click(
-                            70,
-                            130
+                            returnButtonX,
+                            returnButtonY
                         )
                     } else {
                         isSolving = false
