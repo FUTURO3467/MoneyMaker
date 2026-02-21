@@ -37,6 +37,7 @@ android {
     buildFeatures {
         compose = true
     }
+
 }
 
 dependencies {
@@ -48,9 +49,8 @@ dependencies {
     implementation(libs.androidx.compose.ui.graphics)
     implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.androidx.compose.material3)
-    implementation(libs.vision.common)
-    implementation(libs.play.services.mlkit.text.recognition.common)
-    implementation(libs.play.services.mlkit.text.recognition)
+    implementation("com.google.mlkit:vision-common:17.3.0")
+    implementation("com.google.mlkit:text-recognition:16.0.0")
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
