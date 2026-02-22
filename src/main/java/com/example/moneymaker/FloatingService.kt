@@ -103,6 +103,23 @@ class FloatingService : Service() {
             returnButtonX = 70
             returnButtonY = 130
             realityWhyModifier = 0 //(Si l'ocr de TEXTE clique trop haut ou trop bas, ajuster cette merde)
+        } else if (user == "medium phone") {
+            beginScaledX = 512
+            beginScaledY = 1352
+            endScaledX = 3814
+            endScaledY = 4640
+            beginRealX = 25
+            beginRealY = 420
+            endRealX = 1050
+            endRealY = 1450
+            firstButtonX = 65
+            firstButtonY = 2030
+            closeSaveProgressButtonX = 960
+            closeSaveProgressButtonY = 540
+            closeSaveRateButtonY = 690
+            returnButtonX = 70
+            returnButtonY = 30
+            realityWhyModifier = 150
         }
 
         params = WindowManager.LayoutParams(
@@ -467,7 +484,7 @@ class FloatingService : Service() {
                                     salope += 1
                                     if (grid[row][col] == 0) {
                                         grid[row][col] = c.toString().toInt()
-                                    } else if (grid[row][col] != c.toString().toInt()) {
+                                    } else if (grid[row][col] != c.toString().toInt() && col != 8) {
                                         grid[row][col+1] = c.toString().toInt()
                                     }
                                 }
