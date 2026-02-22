@@ -105,13 +105,13 @@ class FloatingService : Service() {
             realityWhyModifier = 0 //(Si l'ocr de TEXTE clique trop haut ou trop bas, ajuster cette merde)
         } else if (user == "BlueStacks") {
             beginScaledX = 512
-            beginScaledY = 1352
+            beginScaledY = 1232
             endScaledX = 3814
-            endScaledY = 4640
+            endScaledY = 4520
             beginRealX = 25
-            beginRealY = 420
+            beginRealY = 390
             endRealX = 1050
-            endRealY = 1450
+            endRealY = 1420
             firstButtonX = 65
             firstButtonY = 2030
             closeSaveProgressButtonX = 960
