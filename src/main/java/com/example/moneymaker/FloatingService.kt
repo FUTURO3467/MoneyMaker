@@ -115,8 +115,8 @@ class FloatingService : Service() {
             firstButtonX = 65
             firstButtonY = 2030
             closeSaveProgressButtonX = 960
-            closeSaveProgressButtonY = 540
-            closeSaveRateButtonY = 690
+            closeSaveProgressButtonY = 640
+            closeSaveRateButtonY = 790
             returnButtonX = 70
             returnButtonY = 30
             realityWhyModifier = 150
