@@ -76,7 +76,7 @@ class FloatingService : Service() {
     private var returnButtonX = 0
     private var returnButtonY = 0
     private var realityWhyModifier = 0
-    private var user = "Louan"
+    private var user = "BlueStacks"
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreate() {
@@ -103,7 +103,7 @@ class FloatingService : Service() {
             returnButtonX = 70
             returnButtonY = 130
             realityWhyModifier = 0 //(Si l'ocr de TEXTE clique trop haut ou trop bas, ajuster cette merde)
-        } else if (user == "medium phone") {
+        } else if (user == "BlueStacks") {
             beginScaledX = 512
             beginScaledY = 1352
             endScaledX = 3814
