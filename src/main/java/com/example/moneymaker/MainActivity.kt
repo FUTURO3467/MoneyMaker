@@ -36,14 +36,11 @@ class MainActivity : ComponentActivity() {
         fun getHeight() : Int = height
     }
     private lateinit var mediaHeight : Integer
-
     private val screenCaptureLauncher =
         registerForActivityResult(
             ActivityResultContracts.StartActivityForResult()
         ) { result ->
-
             if (result.resultCode == RESULT_OK && result.data != null) {
-
                 val intent = Intent(this, FloatingService::class.java)
 
                 intent.putExtra("resultCode", result.resultCode)
@@ -52,11 +49,8 @@ class MainActivity : ComponentActivity() {
                 intent.putExtra("width", windowManager.defaultDisplay.width)
 
                 ContextCompat.startForegroundService(this, intent)
-
             } else {
-
                 println("Permission refusée")
-
             }
         }
 
@@ -65,24 +59,16 @@ class MainActivity : ComponentActivity() {
 
         startActivity(Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS))
         AutoService.instance = AutoService()
-        mediaProjectionManager =
-            getSystemService(Context.MEDIA_PROJECTION_SERVICE)
-                    as MediaProjectionManager
-        screenCaptureLauncher.launch(
-            mediaProjectionManager.createScreenCaptureIntent()
-        )
+        mediaProjectionManager = getSystemService(Context.MEDIA_PROJECTION_SERVICE) as MediaProjectionManager
+        screenCaptureLauncher.launch(mediaProjectionManager.createScreenCaptureIntent())
         if (!Settings.canDrawOverlays(this)) {
-
             val intent = Intent(
                 Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
                 Uri.parse("package:$packageName")
             )
             startActivity(intent)
-
         } else {
-
             startService(Intent(this, FloatingService::class.java))
-
         }
         enableEdgeToEdge()
         setContent {
@@ -99,10 +85,6 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
-
-
-
-
 
 @Composable
 fun Greeting(name: String, modifier: Modifier = Modifier) {

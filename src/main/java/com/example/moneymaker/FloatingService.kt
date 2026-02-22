@@ -81,7 +81,6 @@ class FloatingService : Service() {
     private var returnButtonX = 0
     private var returnButtonY = 0
     private var realityWhyModifier = 0
-
     private var user = "Louan"
 
     @SuppressLint("ClickableViewAccessibility")
@@ -111,18 +110,11 @@ class FloatingService : Service() {
             realityWhyModifier = 0 //(Si l'ocr de TEXTE clique trop haut ou trop bas, ajuster cette merde)
         }
 
-
-
-
         params = WindowManager.LayoutParams(
-
             WindowManager.LayoutParams.WRAP_CONTENT,
             WindowManager.LayoutParams.WRAP_CONTENT,
-
             WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY,
-
             WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
-
             PixelFormat.TRANSLUCENT
         )
 
@@ -132,7 +124,6 @@ class FloatingService : Service() {
 
         windowManager.addView(floatingButton, params)
 
-
         floatingButton.setOnTouchListener(object : View.OnTouchListener {
 
             private var initialX = 0
@@ -141,11 +132,8 @@ class FloatingService : Service() {
             private var initialTouchY = 0f
 
             override fun onTouch(view: View, event: MotionEvent): Boolean {
-
                 when (event.action) {
-
                     MotionEvent.ACTION_DOWN -> {
-
                         initialX = params.x
                         initialY = params.y
 
@@ -156,7 +144,6 @@ class FloatingService : Service() {
                     }
 
                     MotionEvent.ACTION_MOVE -> {
-
                         params.x = initialX + (event.rawX - initialTouchX).toInt()
                         params.y = initialY + (event.rawY - initialTouchY).toInt()
 
@@ -165,7 +152,6 @@ class FloatingService : Service() {
                         return true
                     }
                 }
-
                 return false
             }
         })
@@ -175,7 +161,6 @@ class FloatingService : Service() {
         flags: Int,
         startId: Int
     ): Int {
-
         startMyForeground()
 
         val resultCode = intent?.getIntExtra("resultCode", -1)
@@ -191,36 +176,20 @@ class FloatingService : Service() {
             stopSelf()
 
             return START_NOT_STICKY
-
         }
 
+        val manager = getSystemService(Context.MEDIA_PROJECTION_SERVICE) as MediaProjectionManager
 
-        val manager =
-            getSystemService(Context.MEDIA_PROJECTION_SERVICE)
-                    as MediaProjectionManager
-
-
-        mediaProjection =
-            manager.getMediaProjection(resultCode, data)!!
+        mediaProjection = manager.getMediaProjection(resultCode, data)!!
         mediaProjection.registerCallback(
-
             object : MediaProjection.Callback() {
-
                 override fun onStop() {
-
                     super.onStop()
-
                     println("MediaProjection stopped")
-
                 }
-
             },
-
             Handler(Looper.getMainLooper())
-
         )
-
-
 
         floatingButton.setOnClickListener {
             //! ICI
@@ -236,18 +205,12 @@ class FloatingService : Service() {
                     floatingButton.text = "Off"
                 }
             }
-
         }
-
-
         return START_STICKY
-
     }
 
     private fun startMyForeground() {
-
         val channelId = "screen_capture"
-
         val channel = NotificationChannel(
             channelId,
             "Screen Capture",
@@ -255,7 +218,6 @@ class FloatingService : Service() {
         )
 
         val manager = getSystemService(NotificationManager::class.java)
-
         manager.createNotificationChannel(channel)
 
         val notification = Notification.Builder(this, channelId)
@@ -264,11 +226,8 @@ class FloatingService : Service() {
             .setSmallIcon(android.R.drawable.ic_menu_camera)
             .build()
 
-
         startForeground(1, notification)
-
     }
-
 
     private fun startScreenCapture() {
         // Leopold, je t'en veux. --Louan
@@ -278,7 +237,6 @@ class FloatingService : Service() {
             PixelFormat.RGBA_8888,
             2
         )
-
 
         mediaProjection.createVirtualDisplay(
             "ScreenCapture",
@@ -291,9 +249,7 @@ class FloatingService : Service() {
             null
         )
 
-
         Thread {
-
             while (true) {
                 if(recordingState != 1){
                     Thread.sleep(5000)
@@ -303,7 +259,6 @@ class FloatingService : Service() {
                 val image = imageReader.acquireLatestImage()
 
                 if (image != null) {
-
                     println("Image capturée")
                     if (etape < 4 && !isSolving || etape == 6) {
                         runOCR(imageToBitmap(image))
@@ -311,11 +266,8 @@ class FloatingService : Service() {
                     image.close()
                 }
                 Thread.sleep(2000)
-
             }
-
         }.start()
-
     }
 
 
@@ -327,11 +279,9 @@ class FloatingService : Service() {
 
     fun realX(rect : Rect?): Int {
         return ((rect?.centerX() ?: 0).toFloat() *((screenWidth!!).toFloat() /1080.0F)).toInt()
-
     }
     fun realY(rect : Rect?): Int {
         return ((rect?.centerY() ?: 0).toFloat() *((screenHeight!!).toFloat() /(1750.0F+realityWhyModifier))).toInt()
-
     }
 
     fun runOCR(bitmap: Bitmap) {
@@ -672,44 +622,29 @@ class FloatingService : Service() {
     }
 
     fun solve(grid: Array<IntArray>): Boolean {
-
         for(r in 0..8)
             for(c in 0..8)
-
                 if(grid[r][c]==0){
-
                     for(n in 1..9)
-
                         if(valid(grid,r,c,n)){
-
                             grid[r][c]=n
-
                             if(solve(grid)) return true
-
                             grid[r][c]=0
                         }
-
                     return false
                 }
-
         return true
     }
 
     fun valid(grid: Array<IntArray>, row: Int, col: Int, num: Int): Boolean {
-
         for (i in 0..8) {
-
             if (grid[row][i] == num) return false
-
             if (grid[i][col] == num) return false
-
             val boxRow = 3 * (row / 3) + i / 3
             val boxCol = 3 * (col / 3) + i % 3
-
             if (grid[boxRow][boxCol] == num)
                 return false
         }
-
         return true
     }
 
@@ -720,14 +655,6 @@ class FloatingService : Service() {
             img = imageReader.acquireLatestImage()
         }
     }
-
-
-
-
-
-
-
-
 
     fun imageToBitmap(image: Image): Bitmap {
         val plane = image.planes[0]
@@ -745,9 +672,7 @@ class FloatingService : Service() {
 
 
     override fun onDestroy() {
-
         super.onDestroy()
-
         windowManager.removeView(floatingButton)
 
     }

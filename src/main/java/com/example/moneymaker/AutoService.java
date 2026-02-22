@@ -13,13 +13,9 @@ public class AutoService extends AccessibilityService {
 
     @Override
     protected void onServiceConnected() {
-
         super.onServiceConnected();
-
         instance = this;
-
         System.out.println("Accessibility connected");
-
     }
 
     @Override
@@ -27,22 +23,16 @@ public class AutoService extends AccessibilityService {
 
     @Override
     public void onInterrupt() {
-
         instance = null;
-
     }
 
     public void click(int x, int y) {
-
         if (instance == null) return;
 
         Handler handler = new Handler(Looper.getMainLooper());
-
         handler.post(() -> {
-
             Path path = new Path();
             path.moveTo(x, y);
-
             GestureDescription gesture =
                     new GestureDescription.Builder()
                             .addStroke(
@@ -50,7 +40,6 @@ public class AutoService extends AccessibilityService {
                             .build();
 
             instance.dispatchGesture(gesture, null, null);
-
         });
     }
 }
