@@ -37,13 +37,8 @@ import kotlinx.coroutines.launch
 import androidx.core.graphics.get
 import androidx.core.graphics.set
 import androidx.core.graphics.scale
-import android.graphics.*
 import android.os.Environment
 import android.provider.MediaStore
-import java.io.FileInputStream
-import java.nio.ByteBuffer
-import java.nio.ByteOrder
-import java.nio.channels.FileChannel
 
 class FloatingService : Service() {
 
@@ -230,7 +225,7 @@ class FloatingService : Service() {
     }
 
     private fun startScreenCapture() {
-        // Leopold, je t'en veux. --Louan
+        // ChatGPT, je t'en veux. --Louan
         imageReader = ImageReader.newInstance(
             1080,
             1920,
@@ -354,7 +349,6 @@ class FloatingService : Service() {
                             real_x = realX(rect100)
                         }
                         AutoService.instance.click(real_x, real_y)
-                        // Click dans le isRect max
                         etape = 2
                     } else if (text == "Notes" && etape < 3) {
                         Thread.sleep(4000)
@@ -368,11 +362,8 @@ class FloatingService : Service() {
                         flushImageReader()
                     }
                     println("Texte trouvé: $text dans $rect")
-                    // Tu peux détecter ici les boutons ou chiffres
                 }
-                is_progress = false
                 println(etape)
-
             }
             .addOnFailureListener { e ->
                 e.printStackTrace()
@@ -463,16 +454,15 @@ class FloatingService : Service() {
                             for (i in text.indices) {
                                 val c = text[i]
                                 if (c !in '1'..'9') continue
-                                // Position X du caractère dans l'image scalée
+
                                 var charWidth = rect.width() / text.length.toFloat()
-                                //if (c == '1') charWidth *= 2.0F
                                 val charCenterX = rect.left + charWidth * (i + 0.5f)
                                 val charCenterY = rect.centerY().toFloat()
 
 
                                 val col = ((charCenterX - beginScaledX) / cell).toInt()
                                 val row = ((charCenterY - beginScaledY) / cell).toInt()
-                                println("Char '$c' at x=$charCenterX y=$charCenterY -> col=$col row=$row (gridLeft=$beginScaledX gridTop=$beginScaledY cellW=$cell cellH=$cell)")
+                                //? println("Char '$c' at x=$charCenterX y=$charCenterY -> col=$col row=$row (gridLeft=$beginScaledX gridTop=$beginScaledY cellW=$cell cellH=$cell)")
                                 if (row in 0..8 && col in 0..8) {
                                     salope += 1
                                     if (grid[row][col] == 0) {

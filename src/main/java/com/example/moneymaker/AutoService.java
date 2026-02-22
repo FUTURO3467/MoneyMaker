@@ -2,13 +2,14 @@ package com.example.moneymaker;
 
 import android.accessibilityservice.AccessibilityService;
 import android.accessibilityservice.GestureDescription;
+import android.annotation.SuppressLint;
 import android.graphics.Path;
 import android.os.Handler;
 import android.os.Looper;
 import android.view.accessibility.AccessibilityEvent;
 
+@SuppressLint("AccessibilityPolicy")
 public class AutoService extends AccessibilityService {
-
     public static AutoService instance;
 
     @Override
@@ -33,11 +34,9 @@ public class AutoService extends AccessibilityService {
         handler.post(() -> {
             Path path = new Path();
             path.moveTo(x, y);
-            GestureDescription gesture =
-                    new GestureDescription.Builder()
-                            .addStroke(
-                                    new GestureDescription.StrokeDescription(path, 0, 50))
-                            .build();
+            GestureDescription gesture = new GestureDescription.Builder()
+                .addStroke(new GestureDescription.StrokeDescription(path, 0, 50))
+                .build();
 
             instance.dispatchGesture(gesture, null, null);
         });
