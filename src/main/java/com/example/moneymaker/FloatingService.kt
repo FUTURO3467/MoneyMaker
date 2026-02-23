@@ -342,7 +342,7 @@ class FloatingService : Service() {
                     var real_x = realX(rect)
                     if (is_progress) {
                         continue
-                    } else if (text == "Leave" && etape == 6){
+                    } else if (text == "Leave"){
                         AutoService.instance.click(real_x, real_y)
                         etape = 0
                     } else if (text == "New Game") {
